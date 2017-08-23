@@ -8,11 +8,15 @@ import Colors from '../constants/Colors';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import AddDogScreen from '../screens/AddDogScreen'
 
 export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,
+    },
+    Dog: {
+      screen: AddDogScreen,
     },
     Links: {
       screen: LinksScreen,
@@ -32,6 +36,11 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
+          case 'Dog':
+            iconName = Platform.OS === 'ios'
+              ? `ios-paw${focused ? '' : '-outline'}`
+              : 'md-paw'
+            break
           case 'Links':
             iconName = Platform.OS === 'ios'
               ? `ios-link${focused ? '' : '-outline'}`
