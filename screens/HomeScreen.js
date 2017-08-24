@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const res = await fetch('http://localhost:3000/dogs')
+    const res = await fetch('https://dog-diary.herokuapp.com/dogs')
     const dogs = await res.json()
     this.setState({ dogs })
   }
@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
               <Text>Add Dog</Text>
             </Button>
           </View>
-          
+
           {
             dogs.map((dog, i) => {
               return (

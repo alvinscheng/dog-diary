@@ -34,12 +34,12 @@ export default class AddDogScreen extends Component {
       age: age,
       profile_picture: image
     }
-    const res = await fetch('http://localhost:3000/dogs', {
+    const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
     })
-    
+
     const { navigate } = this.props.navigation
     navigate('Home')
   }
