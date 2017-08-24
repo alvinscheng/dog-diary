@@ -15,7 +15,7 @@ export default TabNavigator(
     Home: {
       screen: HomeScreen,
     },
-    Dog: {
+    AddDog: {
       screen: AddDogScreen,
     },
     Links: {
@@ -36,7 +36,7 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Dog':
+          case 'AddDog':
             iconName = Platform.OS === 'ios'
               ? `ios-paw${focused ? '' : '-outline'}`
               : 'md-paw'
