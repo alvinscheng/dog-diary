@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base'
-import { Image, View } from 'react-native'
+import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base'
+import { Image, View, StyleSheet } from 'react-native'
 import { ImagePicker } from 'expo'
 
 export default class AddDogScreen extends Component {
@@ -48,19 +48,9 @@ export default class AddDogScreen extends Component {
     let { image } = this.state
 
     return (
-      <Container>
-        <Header />
-        <Content>
+      <Container style={styles.container}>
+        <Content style={styles.contentContainer}>
           <Form>
-            <Item>
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Button onPress={this._pickImage}>
-                  <Text>Select Photo</Text>
-                </Button>
-                {image &&
-                  <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-              </View>
-            </Item>
             <Item floatingLabel>
               <Label>Name</Label>
               <Input onChangeText={name => this.setState({name})}/>
@@ -69,15 +59,43 @@ export default class AddDogScreen extends Component {
               <Label>Age</Label>
               <Input onChangeText={age => this.setState({age})}/>
             </Item>
-            <Item>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              {image &&
+                <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
               <Button bordered info
+                style={styles.photoButton}
+                onPress={this._pickImage}>
+                <Text>Select Photo</Text>
+              </Button>
+            </View>
+            <View>
+              <Button bordered info
+                style={styles.submitButton}
                 onPress={this._addDog}>
                 <Text>Submit</Text>
               </Button>
-            </Item>
+            </View>
           </Form>
         </Content>
       </Container>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  contentContainer: {
+    paddingTop: 20,
+  },
+  photoButton: {
+    marginTop: 10,
+    marginLeft: 120,
+  },
+  submitButton: {
+    marginTop: 10,
+    marginLeft: 140,
+  },
+});

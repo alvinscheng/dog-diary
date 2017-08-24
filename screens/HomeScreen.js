@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,8 +8,6 @@ import {
 } from 'react-native'
 import { Button } from 'native-base'
 import { WebBrowser } from 'expo'
-
-import { MonoText } from '../components/StyledText'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -36,32 +33,18 @@ export default class HomeScreen extends React.Component {
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
 
           <View style={styles.getStartedContainer}>
             <Text style={styles.getStartedText}>
               Dog Diary
             </Text>
-            <Button  onPress={() =>
-              navigate('AddDog')
-            }>
-              <Text>Add Dog</Text>
-            </Button>
           </View>
 
           {
             dogs.map((dog, i) => {
               return (
-                <View key={ i }>
+                <View key={ i }
+                  style={styles.dogsContainer}>
                   <Image source={{ uri: dog.profile_picture }} style={{ width: 200, height: 200 }} />
                   <Text>{'Name: ' + dog.name}</Text>
                   <Text>{'Age: ' + dog.age}</Text>
@@ -70,22 +53,20 @@ export default class HomeScreen extends React.Component {
             })
           }
 
+          <View>
+            <Button bordered info
+              style={styles.getStartedButton}
+              onPress={() =>
+                navigate('AddDog')
+              }>
+              <Text>Add Dog</Text>
+            </Button>
+          </View>
+
         </ScrollView>
       </View>
     )
   }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/development-mode'
-    );
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -93,87 +74,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
   contentContainer: {
     paddingTop: 30,
   },
-  welcomeContainer: {
+  dogsContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+    marginTop: 20,
   },
   getStartedContainer: {
     alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
   },
   getStartedText: {
-    fontSize: 32,
+    marginTop: 50,
+    fontSize: 48,
     fontWeight: 'bold',
     color: 'black',
-    lineHeight: 24,
     textAlign: 'center',
   },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+  getStartedButton: {
+    marginTop: 20,
+    marginLeft: 140,
   },
 });
