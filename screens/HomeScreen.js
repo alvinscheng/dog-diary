@@ -17,8 +17,19 @@ export default class HomeScreen extends React.Component {
     header: null,
   }
 
+  state = {
+    dogs: []
+  }
+
+  async componentDidMount() {
+    const res = await fetch('http://localhost:3000/dogs')
+    const dogs = await res.json()
+    this.setState({ dogs })
+  }
+
   render() {
     const { navigate } = this.props.navigation
+    const { dogs } = this.state
 
     return (
       <View style={styles.container}>
@@ -46,6 +57,18 @@ export default class HomeScreen extends React.Component {
               <Text>Add Dog</Text>
             </Button>
           </View>
+          
+          {
+            dogs.map((dog, i) => {
+              return (
+                <View key={ i }>
+                  <Image source={{ uri: dog.profile_picture }} style={{ width: 200, height: 200 }} />
+                  <Text>{'Name: ' + dog.name}</Text>
+                  <Text>{'Age: ' + dog.age}</Text>
+                </View>
+              )
+            })
+          }
 
         </ScrollView>
       </View>

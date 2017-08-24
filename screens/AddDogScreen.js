@@ -39,9 +39,9 @@ export default class AddDogScreen extends Component {
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
     })
-
-    // Switch back to home screen
-    console.log('done')
+    
+    const { navigate } = this.props.navigation
+    navigate('Home')
   }
 
   render() {
