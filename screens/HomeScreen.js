@@ -16,8 +16,7 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const res = await fetch('http://localhost:3000/dogs')
-    // const res = await fetch('https://dog-diary.herokuapp.com/dogs')
+    const res = await fetch('https://dog-diary.herokuapp.com/dogs')
     const dogs = await res.json()
     this.props.dispatch({
       type: 'ADDED_DOGS',
@@ -49,7 +48,7 @@ class HomeScreen extends React.Component {
                   <Image source={
                     dog.profile_picture.startsWith('file')
                     ? { uri: dog.profile_picture }
-                    : { uri: 'http://localhost:3000/uploads/' + dog.profile_picture }
+                    : { uri: 'https://dog-diary.herokuapp.com/uploads/' + dog.profile_picture }
                   }
                   style={{ width: 200, height: 200 }} />
                   <Text>{'Name: ' + dog.name}</Text>
