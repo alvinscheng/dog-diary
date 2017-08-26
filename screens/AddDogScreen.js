@@ -30,21 +30,36 @@ class AddDogScreen extends Component {
 
   _addDog = async () => {
     const {name, age, image} = this.state
-    const data = {
-      name: name,
-      age: age,
-      profile_picture: image
-    }
+    const filename = image.split('/').pop()
+    let match = /\.(\w+)$/.exec(filename)
+    let type = match ? `image/${match[1]}` : `image`
+
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('age', age)
+    formData.append('profile_picture', {
+      uri: image,
+      name: filename,
+      type
+    })
+
     // const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
     const res = await fetch('http://localhost:3000/dogs', {
       method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
+      body: formData,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
     })
 
     this.props.dispatch({
       type: 'ADDED_DOGS',
-      payload: { dogs: [data] }
+      payload: { dogs: [{
+        name,
+        age,
+        profile_picture: image
+      }] }
     })
 
     const { navigate } = this.props.navigation
