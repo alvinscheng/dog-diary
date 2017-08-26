@@ -5,20 +5,16 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HomeScreen from '../screens/HomeScreen'
+import AddDogScreen from '../screens/AddDogScreen'
 
 export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,
     },
-    Links: {
-      screen: LinksScreen,
-    },
-    Settings: {
-      screen: SettingsScreen,
+    AddDog: {
+      screen: AddDogScreen,
     },
   },
   {
@@ -32,15 +28,10 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Links':
+          case 'AddDog':
             iconName = Platform.OS === 'ios'
-              ? `ios-link${focused ? '' : '-outline'}`
-              : 'md-link';
-            break;
-          case 'Settings':
-            iconName = Platform.OS === 'ios'
-              ? `ios-options${focused ? '' : '-outline'}`
-              : 'md-options';
+              ? `ios-paw${focused ? '' : '-outline'}`
+              : 'md-paw'
         }
         return (
           <Ionicons
@@ -57,4 +48,4 @@ export default TabNavigator(
     animationEnabled: false,
     swipeEnabled: false,
   }
-);
+)
