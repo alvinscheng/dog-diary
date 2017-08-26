@@ -26,7 +26,7 @@ export default class DogProfileScreen extends React.Component {
   // }
 
   render() {
-    // const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation
     // const { dogs } = this.props
 
     return (
@@ -38,9 +38,9 @@ export default class DogProfileScreen extends React.Component {
           <View>
             <Button bordered info
               style={styles.getStartedButton}
-              // onPress={() =>
-              //   navigate('AddDog')
-              // }
+              onPress={() =>
+                navigate('AddPhoto')
+              }
             >
               <Text>Add Photo</Text>
             </Button>

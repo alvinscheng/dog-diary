@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import AddDogScreen from '../screens/AddDogScreen'
+import AddPhotoScreen from '../screens/AddPhotoScreen'
 
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
@@ -14,6 +15,9 @@ const RootStackNavigator = StackNavigator(
     },
     AddDog: {
       screen: AddDogScreen
+    },
+    AddPhoto: {
+      screen: AddPhotoScreen
     }
   },
   {
