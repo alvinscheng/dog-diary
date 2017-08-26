@@ -43,22 +43,14 @@ class AddDogScreen extends Component {
       type
     })
 
-    const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
+    // const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
+    const res = await fetch('http://localhost:3000/dogs', {
       method: 'POST',
       body: formData,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data'
       }
-    })
-
-    this.props.dispatch({
-      type: 'ADDED_DOGS',
-      payload: { dogs: [{
-        name,
-        age,
-        profile_picture: image
-      }] }
     })
 
     const { navigate } = this.props.navigation

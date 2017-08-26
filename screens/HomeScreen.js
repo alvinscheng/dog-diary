@@ -15,18 +15,20 @@ class HomeScreen extends React.Component {
     header: null,
   }
 
+  state = {
+    dogs: []
+  }
+
   async componentDidMount() {
-    const res = await fetch('https://dog-diary.herokuapp.com/dogs')
+    // const res = await fetch('https://dog-diary.herokuapp.com/dogs')
+    const res = await fetch('http://localhost:3000/dogs')
     const dogs = await res.json()
-    this.props.dispatch({
-      type: 'ADDED_DOGS',
-      payload: { dogs }
-    })
+    this.setState({ dogs })
   }
 
   render() {
     const { navigate } = this.props.navigation
-    const { dogs } = this.props
+    const { dogs } = this.state
 
     return (
       <View style={styles.container}>
@@ -46,9 +48,9 @@ class HomeScreen extends React.Component {
                 <View key={ i }
                   style={styles.dogsContainer}>
                   <Image source={
-                    dog.profile_picture.startsWith('file')
-                    ? { uri: dog.profile_picture }
-                    : { uri: 'https://dog-diary.herokuapp.com/uploads/' + dog.profile_picture }
+                    // dog.profile_picture.startsWith('file')
+                    // ? { uri: dog.profile_picture }
+                    { uri: 'http://localhost:3000/uploads/' + dog.profile_picture }
                   }
                   style={{ width: 200, height: 200 }} />
                   <Text>{'Name: ' + dog.name}</Text>
