@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base'
 import { Image, View, StyleSheet } from 'react-native'
 import { ImagePicker } from 'expo'
+import { connect } from 'react-redux'
 
-export default class AddDogScreen extends Component {
+class AddDogScreen extends Component {
   static navigationOptions = {
     title: 'Add Dog',
   }
@@ -34,10 +35,16 @@ export default class AddDogScreen extends Component {
       age: age,
       profile_picture: image
     }
-    const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
+    // const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
+    const res = await fetch('http://localhost:3000/dogs', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
+    })
+
+    this.props.dispatch({
+      type: 'ADDED_DOGS',
+      payload: { dogs: [data] }
     })
 
     const { navigate } = this.props.navigation
@@ -81,6 +88,14 @@ export default class AddDogScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    dogs: state
+  }
+}
+
+export default connect(mapStateToProps)(AddDogScreen)
 
 const styles = StyleSheet.create({
   container: {

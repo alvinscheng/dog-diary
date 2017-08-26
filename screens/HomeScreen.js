@@ -8,25 +8,26 @@ import {
 } from 'react-native'
 import { Button } from 'native-base'
 import { WebBrowser } from 'expo'
+import { connect } from 'react-redux'
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
 
-  state = {
-    dogs: []
-  }
-
   async componentDidMount() {
-    const res = await fetch('https://dog-diary.herokuapp.com/dogs')
+    const res = await fetch('http://localhost:3000/dogs')
+    // const res = await fetch('https://dog-diary.herokuapp.com/dogs')
     const dogs = await res.json()
-    this.setState({ dogs })
+    this.props.dispatch({
+      type: 'ADDED_DOGS',
+      payload: { dogs }
+    })
   }
 
   render() {
     const { navigate } = this.props.navigation
-    const { dogs } = this.state
+    const { dogs } = this.props
 
     return (
       <View style={styles.container}>
@@ -68,6 +69,15 @@ export default class HomeScreen extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    dogs: state
+  }
+}
+
+export default connect(mapStateToProps)(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {
