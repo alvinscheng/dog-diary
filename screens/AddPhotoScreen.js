@@ -10,9 +10,7 @@ export default class AddPhotoScreen extends Component {
   }
 
   state = {
-    image: null,
-    name: '',
-    age: ''
+    note: ''
   }
 
   _pickImage = async () => {
@@ -64,14 +62,6 @@ export default class AddPhotoScreen extends Component {
       <Container style={styles.container}>
         <Content style={styles.contentContainer}>
           <Form>
-            <Item floatingLabel>
-              <Label>Name</Label>
-              <Input onChangeText={name => this.setState({name})}/>
-            </Item>
-            <Item floatingLabel>
-              <Label>Age</Label>
-              <Input onChangeText={age => this.setState({age})}/>
-            </Item>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               {image &&
                 <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
@@ -81,6 +71,11 @@ export default class AddPhotoScreen extends Component {
                 <Text>Select Photo</Text>
               </Button>
             </View>
+            <Item regular>
+              <Input placeholder='Add comments here'
+                multiline={true}
+                style={{height: 100, width: 200}}/>
+            </Item>
             <View>
               <Button bordered info
                 style={styles.submitButton}
