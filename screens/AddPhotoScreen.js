@@ -10,6 +10,7 @@ export default class AddPhotoScreen extends Component {
   }
 
   state = {
+    image: null,
     note: ''
   }
 
@@ -19,30 +20,27 @@ export default class AddPhotoScreen extends Component {
       aspect: [4, 3],
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
   }
 
-  _addDog = async () => {
-    const {name, age, image} = this.state
+  _addPhoto = async () => {
+    const {note, image} = this.state
     const filename = image.split('/').pop()
     let match = /\.(\w+)$/.exec(filename)
     let type = match ? `image/${match[1]}` : `image`
 
     const formData = new FormData()
-    formData.append('name', name)
-    formData.append('age', age)
-    formData.append('profile_picture', {
+    formData.append('note', note)
+    formData.append('picture', {
       uri: image,
       name: filename,
       type
     })
 
     // const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
-    const res = await fetch('http://localhost:3000/dogs', {
+    const res = await fetch('http://localhost:3000/pictures/1', {
       method: 'POST',
       body: formData,
       headers: {
@@ -52,7 +50,7 @@ export default class AddPhotoScreen extends Component {
     })
 
     const { navigate } = this.props.navigation
-    navigate('Home')
+    navigate('Dog')
   }
 
   render() {
@@ -74,12 +72,13 @@ export default class AddPhotoScreen extends Component {
             <Item regular>
               <Input placeholder='Add comments here'
                 multiline={true}
-                style={{height: 100, width: 200}}/>
+                style={{height: 100, width: 200}}
+                onChangeText={note => this.setState({note})}/>
             </Item>
             <View>
               <Button bordered info
                 style={styles.submitButton}
-                onPress={this._addDog}>
+                onPress={this._addPhoto}>
                 <Text>Submit</Text>
               </Button>
             </View>
