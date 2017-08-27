@@ -16,18 +16,19 @@ export default class DogProfileScreen extends React.Component {
     title: 'Copper'
   }
 
-  // async componentDidMount() {
-  //   const res = await fetch('https://dog-diary.herokuapp.com/dogs')
-  //   const dogs = await res.json()
-  //   this.props.dispatch({
-  //     type: 'ADDED_DOGS',
-  //     payload: { dogs }
-  //   })
-  // }
+  state = {
+    photos: []
+  }
+
+  async componentDidMount() {
+    const res = await fetch('http://localhost:3000/pictures/1')
+    const photos = await res.json()
+    this.setState({photos})
+  }
 
   render() {
     const { navigate } = this.props.navigation
-    // const { dogs } = this.props
+    const { photos } = this.state
 
     return (
       <View style={styles.container}>
@@ -45,6 +46,19 @@ export default class DogProfileScreen extends React.Component {
               <Text>Add Photo</Text>
             </Button>
           </View>
+
+          {
+            photos.map((photo, i) => {
+              return (
+                <View key={i}>
+                  <Image
+                    source={{ uri: 'http://localhost:3000/uploads/' + photo.picture }}
+                    style={{ width: 200, height: 200 }} />
+                  <Text>{'Note: ' + photo.note}</Text>
+                </View>
+              )
+            })
+          }
 
         </ScrollView>
       </View>

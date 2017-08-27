@@ -39,7 +39,6 @@ export default class AddPhotoScreen extends Component {
       type
     })
 
-    // const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
     const res = await fetch('http://localhost:3000/pictures/1', {
       method: 'POST',
       body: formData,

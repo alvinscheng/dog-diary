@@ -47,12 +47,9 @@ class HomeScreen extends React.Component {
               return (
                 <View key={ i }
                   style={styles.dogsContainer}>
-                  <Image source={
-                    // dog.profile_picture.startsWith('file')
-                    // ? { uri: dog.profile_picture }
-                    { uri: 'http://localhost:3000/uploads/' + dog.profile_picture }
-                  }
-                  style={{ width: 200, height: 200 }} />
+                  <Image
+                    source={{ uri: 'http://localhost:3000/uploads/' + dog.profile_picture }}
+                    style={{ width: 200, height: 200 }} />
                   <Text>{'Name: ' + dog.name}</Text>
                   <Text>{'Age: ' + dog.age}</Text>
                 </View>
