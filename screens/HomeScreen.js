@@ -27,6 +27,18 @@ class HomeScreen extends React.Component {
     this.setState({ dogs })
   }
 
+  _pressDog = dog => {
+    const { navigate } = this.props.navigation
+    const { name, age, id } = dog
+    this.props.dispatch({
+      type: 'PICKED_DOG',
+      payload: {
+        dog: {name, age, id}
+      }
+    })
+    navigate('Dog')
+  }
+
   render() {
     const { navigate } = this.props.navigation
     const { dogs } = this.state
@@ -44,11 +56,11 @@ class HomeScreen extends React.Component {
           </View>
 
           {
-            dogs.map((dog, i) => {
+            dogs.map(dog => {
               return (
-                <View key={ i }
+                <View key={ dog.id }
                   style={styles.dogsContainer}>
-                  <TouchableHighlight onPress={() => navigate('Dog')}>
+                  <TouchableHighlight onPress={() => this._pressDog(dog)}>
                     <Image
                       source={{ uri: 'http://localhost:3000/uploads/' + dog.profile_picture }}
                       style={{ width: 200, height: 200 }}/>
@@ -77,7 +89,7 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    dogs: state
+    dog: state
   }
 }
 

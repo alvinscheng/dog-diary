@@ -97,7 +97,7 @@ class AddDogScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    dogs: state
+    dog: state
   }
 }
 

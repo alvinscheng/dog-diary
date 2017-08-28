@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-function reducer(state = [], action) {
+function reducer(state = { name: 'Dog', age: 0, id: 0 }, action) {
   switch (action.type) {
-    case 'ADDED_DOGS':
-      return action.payload.dogs.concat(state)
+    case 'PICKED_DOG':
+      return action.payload.dog
     default:
       return state
   }
