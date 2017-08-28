@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } from 'react-native'
 import { Button } from 'native-base'
@@ -47,11 +48,11 @@ class HomeScreen extends React.Component {
               return (
                 <View key={ i }
                   style={styles.dogsContainer}>
-                  <Image
-                    source={{ uri: 'http://localhost:3000/uploads/' + dog.profile_picture }}
-                    style={{ width: 200, height: 200 }} />
-                  <Text>{'Name: ' + dog.name}</Text>
-                  <Text>{'Age: ' + dog.age}</Text>
+                  <TouchableHighlight onPress={() => navigate('Dog')}>
+                    <Image
+                      source={{ uri: 'http://localhost:3000/uploads/' + dog.profile_picture }}
+                      style={{ width: 200, height: 200 }}/>
+                  </TouchableHighlight>
                 </View>
               )
             })
