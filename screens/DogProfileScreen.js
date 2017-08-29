@@ -54,7 +54,7 @@ class DogProfileScreen extends React.Component {
 
           <View>
             <Button bordered info
-              style={styles.getStartedButton}
+              style={styles.addPhotoButton}
               onPress={() =>
                 navigate('AddPhoto')
               }
@@ -70,7 +70,7 @@ class DogProfileScreen extends React.Component {
                   <Item key={i}>
                     <Image
                       source={{ uri: 'https://dog-diary.herokuapp.com/uploads/' + photo.picture }}
-                      style={{ width: 175, height: 175 }} />
+                      style={{ width: 185, height: 185 }} />
                   </Item>
                 )
               })
@@ -118,8 +118,9 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
   },
-  getStartedButton: {
+  addPhotoButton: {
     marginTop: 20,
     marginLeft: 140,
+    marginBottom: 20,
   },
 });
