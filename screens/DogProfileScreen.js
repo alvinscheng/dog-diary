@@ -21,10 +21,16 @@ class DogProfileScreen extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     if (this.props.dog.id !== nextProps.dog.id) {
-      const res = await fetch('http://localhost:3000/pictures/' + nextProps.dog.id)
+      const res = await fetch('https://dog-diary.herokuapp.com/pictures/' + nextProps.dog.id)
       const photos = await res.json()
       this.setState({photos})
     }
+  }
+
+  async componentDidMount() {
+    const res = await fetch('https://dog-diary.herokuapp.com/pictures/' + this.props.dog.id)
+    const photos = await res.json()
+    this.setState({photos})
   }
 
   render() {
@@ -63,8 +69,8 @@ class DogProfileScreen extends React.Component {
                 return (
                   <Item key={i}>
                     <Image
-                      source={{ uri: 'http://localhost:3000/uploads/' + photo.picture }}
-                      style={{ width: 100, height: 100 }} />
+                      source={{ uri: 'https://dog-diary.herokuapp.com/uploads/' + photo.picture }}
+                      style={{ width: 175, height: 175 }} />
                   </Item>
                 )
               })

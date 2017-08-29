@@ -10,7 +10,7 @@ class AddPhotoScreen extends Component {
   }
 
   state = {
-    image: null,
+    image: 'http://via.placeholder.com/300x300',
     note: ''
   }
 
@@ -39,7 +39,7 @@ class AddPhotoScreen extends Component {
       type
     })
 
-    const res = await fetch('http://localhost:3000/pictures/' + this.props.dog.id, {
+    const res = await fetch('https://dog-diary.herokuapp.com/pictures/' + this.props.dog.id, {
       method: 'POST',
       body: formData,
       headers: {
@@ -61,21 +61,21 @@ class AddPhotoScreen extends Component {
           <Form>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               {image &&
-                <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
+                <Image source={{ uri: image }} style={{ width: 300, height: 300, marginTop: 20 }} />}
               <Button bordered info
                 style={styles.photoButton}
                 onPress={this._pickImage}>
                 <Text>Select Photo</Text>
               </Button>
             </View>
-            <Item regular>
+            <Item regular style={{marginTop:10}}>
               <Input placeholder='Add comments here'
                 multiline={true}
                 style={{height: 100, width: 200}}
                 onChangeText={note => this.setState({note})}/>
             </Item>
             <View>
-              <Button bordered info
+              <Button block info
                 style={styles.submitButton}
                 onPress={this._addPhoto}>
                 <Text>Submit</Text>
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
     marginLeft: 120,
   },
   submitButton: {
-    marginTop: 10,
-    marginLeft: 140,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10
   },
 });

@@ -21,8 +21,8 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    // const res = await fetch('https://dog-diary.herokuapp.com/dogs')
-    const res = await fetch('http://localhost:3000/dogs')
+    const res = await fetch('https://dog-diary.herokuapp.com/dogs')
+    // const res = await fetch('http://localhost:3000/dogs')
     const dogs = await res.json()
     this.setState({ dogs })
   }
@@ -63,7 +63,7 @@ class HomeScreen extends React.Component {
                   style={styles.dogsContainer}>
                   <TouchableHighlight onPress={() => this._pressDog(dog)}>
                     <Image
-                      source={{ uri: 'http://localhost:3000/uploads/' + dog.profile_picture }}
+                      source={{ uri: 'https://dog-diary.herokuapp.com/uploads/' + dog.profile_picture }}
                       style={{ width: 200, height: 200 }}/>
                   </TouchableHighlight>
                 </View>
