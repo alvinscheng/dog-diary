@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base'
 import { Image, View, StyleSheet } from 'react-native'
 import { ImagePicker } from 'expo'
+import { connect } from 'react-redux'
 
-export default class AddDogScreen extends Component {
+class AddPhotoScreen extends Component {
   static navigationOptions = {
-    title: 'Add Dog',
+    title: 'Add Photo',
   }
 
   state = {
-    image: null,
-    name: '',
-    age: ''
+    image: 'http://via.placeholder.com/300x300',
+    note: ''
   }
 
   _pickImage = async () => {
@@ -20,29 +20,26 @@ export default class AddDogScreen extends Component {
       aspect: [4, 3],
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
   }
 
-  _addDog = async () => {
-    const {name, age, image} = this.state
+  _addPhoto = async () => {
+    const {note, image} = this.state
     const filename = image.split('/').pop()
     let match = /\.(\w+)$/.exec(filename)
     let type = match ? `image/${match[1]}` : `image`
 
     const formData = new FormData()
-    formData.append('name', name)
-    formData.append('age', age)
-    formData.append('profile_picture', {
+    formData.append('note', note)
+    formData.append('picture', {
       uri: image,
       name: filename,
       type
     })
 
-    const res = await fetch('https://dog-diary.herokuapp.com/dogs', {
+    const res = await fetch('https://dog-diary.herokuapp.com/pictures/' + this.props.dog.id, {
       method: 'POST',
       body: formData,
       headers: {
@@ -52,7 +49,7 @@ export default class AddDogScreen extends Component {
     })
 
     const { navigate } = this.props.navigation
-    navigate('Home')
+    navigate('Dog')
   }
 
   render() {
@@ -62,27 +59,25 @@ export default class AddDogScreen extends Component {
       <Container style={styles.container}>
         <Content style={styles.contentContainer}>
           <Form>
-            <Item floatingLabel>
-              <Label>Name</Label>
-              <Input onChangeText={name => this.setState({name})}/>
-            </Item>
-            <Item floatingLabel>
-              <Label>Age</Label>
-              <Input onChangeText={age => this.setState({age})}/>
-            </Item>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               {image &&
-                <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
+                <Image source={{ uri: image }} style={{ width: 300, height: 300, marginTop: 20 }} />}
               <Button bordered info
                 style={styles.photoButton}
                 onPress={this._pickImage}>
                 <Text>Select Photo</Text>
               </Button>
             </View>
+            <Item regular style={{marginTop:10}}>
+              <Input placeholder='Add comments here'
+                multiline={true}
+                style={{height: 100, width: 200}}
+                onChangeText={note => this.setState({note})}/>
+            </Item>
             <View>
-              <Button bordered info
+              <Button block info
                 style={styles.submitButton}
-                onPress={this._addDog}>
+                onPress={this._addPhoto}>
                 <Text>Submit</Text>
               </Button>
             </View>
@@ -92,6 +87,14 @@ export default class AddDogScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    dog: state
+  }
+}
+
+export default connect(mapStateToProps)(AddPhotoScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -106,7 +109,8 @@ const styles = StyleSheet.create({
     marginLeft: 120,
   },
   submitButton: {
-    marginTop: 10,
-    marginLeft: 140,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10
   },
 });

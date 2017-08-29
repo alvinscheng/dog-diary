@@ -6,15 +6,15 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/HomeScreen'
-import AddDogScreen from '../screens/AddDogScreen'
+import DogProfileScreen from '../screens/DogProfileScreen'
 
 export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,
     },
-    AddDog: {
-      screen: AddDogScreen,
+    Dog: {
+      screen: DogProfileScreen,
     },
   },
   {
@@ -28,7 +28,7 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'AddDog':
+          case 'Dog':
             iconName = Platform.OS === 'ios'
               ? `ios-paw${focused ? '' : '-outline'}`
               : 'md-paw'

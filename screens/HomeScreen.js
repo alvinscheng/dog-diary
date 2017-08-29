@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } from 'react-native'
 import { Button } from 'native-base'
@@ -12,21 +13,35 @@ import { connect } from 'react-redux'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
+  }
+
+  state = {
+    dogs: []
   }
 
   async componentDidMount() {
     const res = await fetch('https://dog-diary.herokuapp.com/dogs')
     const dogs = await res.json()
+    this.setState({ dogs })
+  }
+
+  _pressDog = dog => {
+    const { name, age, id } = dog
     this.props.dispatch({
-      type: 'ADDED_DOGS',
-      payload: { dogs }
+      type: 'PICKED_DOG',
+      payload: {
+        dog: {name, age, id}
+      }
     })
+
+    const { navigate } = this.props.navigation
+    navigate('Dog')
   }
 
   render() {
     const { navigate } = this.props.navigation
-    const { dogs } = this.props
+    const { dogs } = this.state
 
     return (
       <View style={styles.container}>
@@ -41,18 +56,15 @@ class HomeScreen extends React.Component {
           </View>
 
           {
-            dogs.map((dog, i) => {
+            dogs.map(dog => {
               return (
-                <View key={ i }
+                <View key={ dog.id }
                   style={styles.dogsContainer}>
-                  <Image source={
-                    dog.profile_picture.startsWith('file')
-                    ? { uri: dog.profile_picture }
-                    : { uri: 'https://dog-diary.herokuapp.com/uploads/' + dog.profile_picture }
-                  }
-                  style={{ width: 200, height: 200 }} />
-                  <Text>{'Name: ' + dog.name}</Text>
-                  <Text>{'Age: ' + dog.age}</Text>
+                  <TouchableHighlight onPress={() => this._pressDog(dog)}>
+                    <Image
+                      source={{ uri: 'https://dog-diary.herokuapp.com/uploads/' + dog.profile_picture }}
+                      style={{ width: 200, height: 200 }}/>
+                  </TouchableHighlight>
                 </View>
               )
             })
@@ -74,10 +86,9 @@ class HomeScreen extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
-    dogs: state
+    dog: state
   }
 }
 
