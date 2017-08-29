@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native'
-import { Button } from 'native-base'
+import { Button, Item } from 'native-base'
 import { WebBrowser } from 'expo'
 import { connect } from 'react-redux'
 
@@ -38,8 +38,11 @@ class DogProfileScreen extends React.Component {
           contentContainerStyle={styles.contentContainer}>
 
           <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>
+            <Text style={styles.dogName}>
               {this.props.dog.name}
+            </Text>
+            <Text style={styles.dogAge}>
+              {'age: ' + this.props.dog.age}
             </Text>
           </View>
 
@@ -54,18 +57,19 @@ class DogProfileScreen extends React.Component {
             </Button>
           </View>
 
-          {
-            photos.map((photo, i) => {
-              return (
-                <View key={i}>
-                  <Image
-                    source={{ uri: 'http://localhost:3000/uploads/' + photo.picture }}
-                    style={{ width: 200, height: 200 }} />
-                  <Text>{'Note: ' + photo.note}</Text>
-                </View>
-              )
-            })
-          }
+          <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+            {
+              photos.map((photo, i) => {
+                return (
+                  <Item key={i}>
+                    <Image
+                      source={{ uri: 'http://localhost:3000/uploads/' + photo.picture }}
+                      style={{ width: 100, height: 100 }} />
+                  </Item>
+                )
+              })
+            }
+          </View>
 
         </ScrollView>
       </View>
@@ -97,9 +101,14 @@ const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: 'center',
   },
-  getStartedText: {
+  dogName: {
     fontSize: 36,
     fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+  },
+  dogAge: {
+    fontSize: 18,
     color: 'black',
     textAlign: 'center',
   },
