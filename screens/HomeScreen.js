@@ -22,7 +22,6 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const res = await fetch('https://dog-diary.herokuapp.com/dogs')
-    // const res = await fetch('http://localhost:3000/dogs')
     const dogs = await res.json()
     this.setState({ dogs })
   }
@@ -86,7 +85,6 @@ class HomeScreen extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = state => {
   return {

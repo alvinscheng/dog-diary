@@ -100,10 +100,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
-  dogsContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
   getStartedContainer: {
     alignItems: 'center',
   },
