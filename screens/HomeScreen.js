@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
   }
 
   state = {
@@ -28,7 +28,6 @@ class HomeScreen extends React.Component {
   }
 
   _pressDog = dog => {
-    const { navigate } = this.props.navigation
     const { name, age, id } = dog
     this.props.dispatch({
       type: 'PICKED_DOG',
@@ -36,6 +35,8 @@ class HomeScreen extends React.Component {
         dog: {name, age, id}
       }
     })
+
+    const { navigate } = this.props.navigation
     navigate('Dog')
   }
 

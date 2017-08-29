@@ -10,20 +10,21 @@ import { Button } from 'native-base'
 import { WebBrowser } from 'expo'
 import { connect } from 'react-redux'
 
-export default class DogProfileScreen extends React.Component {
+class DogProfileScreen extends React.Component {
   static navigationOptions = {
-    // Make dog name part of redux state
-    title: 'Copper'
+    title: null
   }
 
   state = {
     photos: []
   }
 
-  async componentDidMount() {
-    const res = await fetch('http://localhost:3000/pictures/1')
-    const photos = await res.json()
-    this.setState({photos})
+  async componentWillReceiveProps(nextProps) {
+    if (this.props.dog.id !== nextProps.dog.id) {
+      const res = await fetch('http://localhost:3000/pictures/' + nextProps.dog.id)
+      const photos = await res.json()
+      this.setState({photos})
+    }
   }
 
   render() {
@@ -35,6 +36,12 @@ export default class DogProfileScreen extends React.Component {
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}>
+
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.getStartedText}>
+              {this.props.dog.name}
+            </Text>
+          </View>
 
           <View>
             <Button bordered info
@@ -67,13 +74,13 @@ export default class DogProfileScreen extends React.Component {
 }
 
 
-// const mapStateToProps = state => {
-//   return {
-//     dogs: state
-//   }
-// }
+const mapStateToProps = state => {
+  return {
+    dog: state
+  }
+}
 
-// export default connect(mapStateToProps)(HomeScreen)
+export default connect(mapStateToProps)(DogProfileScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -91,8 +98,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   getStartedText: {
-    marginTop: 50,
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center',

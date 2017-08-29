@@ -4,7 +4,7 @@ import { Image, View, StyleSheet } from 'react-native'
 import { ImagePicker } from 'expo'
 import { connect } from 'react-redux'
 
-export default class AddPhotoScreen extends Component {
+class AddPhotoScreen extends Component {
   static navigationOptions = {
     title: 'Add Photo',
   }
@@ -39,7 +39,7 @@ export default class AddPhotoScreen extends Component {
       type
     })
 
-    const res = await fetch('http://localhost:3000/pictures/1', {
+    const res = await fetch('http://localhost:3000/pictures/' + this.props.dog.id, {
       method: 'POST',
       body: formData,
       headers: {
@@ -87,6 +87,14 @@ export default class AddPhotoScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    dog: state
+  }
+}
+
+export default connect(mapStateToProps)(AddPhotoScreen)
 
 const styles = StyleSheet.create({
   container: {
